@@ -12,6 +12,6 @@ RUN apk update && \
     apk add python3 && \
     apk add git && \
     pip3 install redis --disable-pip-version-check && \
-    cd /tmp && git clone https://github.com/deppierre/Docker_k8s.git && \
+    cd /tmp && git clone https://github.com/deppierre/Docker_k8s.git/redis && \
     cd /tmp/Docker_k8s && python3 import_data.py
 CMD redis-cli -h $REDIS_HOST -p $REDIS_PORT -a $REDIS_PASSWORD ping
