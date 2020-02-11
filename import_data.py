@@ -16,5 +16,13 @@ except KeyError:
         sys.exit(0)
 finally:
     redis_port = redis_host.split('.')[0].lstrip('redis-')
-    r = redis.Redis(host=redis_host,port=redis_port,password=redis_password)
 
+#Import data
+r = redis.Redis(host=redis_host,port=redis_port,password=redis_password)
+redis_index = 0
+
+with open('country.csv') as file:
+    for line in file.readlines():
+        country, capital, *c = line.strip().split(',')
+        print('add country: {}'.format(country))
+        r.set(country, capital)
