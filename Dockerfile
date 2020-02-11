@@ -1,4 +1,4 @@
-#docker build --build-arg redis_password= -t deppierre/database_lab:redis_client . --force-rm 
+#docker build --build-arg redis_password= -t deppierre/database_lab:redis_client . --force-rm
 #docker run --name redis_client -ti --rm deppierre/database_lab:redis_client sh
 #docker push deppierre/database_lab:redis_client
 FROM alpine
@@ -12,4 +12,6 @@ RUN apk update && \
     apk add python3 && \
     apk add git && \
     pip3 install redis --disable-pip-version-check && \
-    cd /tmp && git clone https://github.com/deppierre/Docker_k8s.git
+    cd /tmp && git clone https://github.com/deppierre/Docker_k8s.git && \
+    cd /tmp/Docker_k8s && python3 import_data.py
+CMD redis-cli -h $REDIS_HOST -p $REDIS_PORT -a $REDIS_PASSWORD ping
