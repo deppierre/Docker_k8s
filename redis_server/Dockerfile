@@ -4,3 +4,4 @@ RUN apt-get update && \
     wget -y && \
     cd /tmp && \
     wget 'https://raw.githubusercontent.com/deppierre/Docker_k8s/master/redis_dataset/country.csv'
+#CMD cat country.csv | redis-cli --pipe
