@@ -1,6 +1,3 @@
-#delete: docker rm mongo_server -f && docker rmi deppierre/mongodb_server
-#docker build -t deppierre/mongodb_server . --force-rm
-#docker run -d --name mongo_server --memory 800MB deppierre/mongodb_server
 FROM mongo
 ENV mongodb_university_user="m001-student"
 ENV mongodb_university_password="m001-mongodb-basics"

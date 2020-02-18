@@ -1,6 +1,3 @@
-#docker build --build-arg redis_password= -t deppierre/database_lab:redis_client . --force-rm
-#docker run --name redis_client -ti --rm deppierre/database_lab:redis_client sh
-#docker push deppierre/database_lab:redis_client
 FROM alpine
 ARG redis_password
 ENV REDIS_PORT="12160"
