@@ -1,7 +1,7 @@
 # Docker_k8s
-Redis is a projet to create a container with redis-cli including a connection with Redis labs
+This is a projet to manipulate Redis en MongoDB Cluster (Atlas)
 
-To push new files:
+To init new Git dir:
 ```
 git init
 git remote add origin https://github.com/deppierre/Docker_k8s.git
@@ -10,4 +10,32 @@ git branch --set-upstream-to=origin/master
 git add .
 git commit -am 'push'
 git push origin master
+```
+1. To recreate a MongoDB container:
+- delete:
+```
+docker rm mongo_server -f && docker rmi deppierre/mongodb_server
+```
+- Rebuild the Dockerfile and run:
+```
+docker build -t deppierre/mongodb_server . --force-rm
+docker run -d --name mongo_server --memory 800MB deppierre/mongodb_server
+```
+
+2. To recreate a Redis container
+- delete:
+```
+docker rm redis_server -f && docker rmi deppierre/redis_server
+```
+
+- Rebuild the Dockerfile and run:
+```
+docker build --build-arg redis_password=<password here> -t deppierre/redis_server . --force-rm
+docker run --name redis_server -ti --memory 800MB deppierre/redis_server
+```
+
+3. To push to Docker repository:
+```
+docker push deppierre/redis_server
+docker push deppierre/mongodb_server
 ```
