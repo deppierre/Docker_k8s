@@ -1,7 +1,7 @@
 # Docker_k8s
 This is a projet to manipulate Redis en MongoDB Cluster (Atlas)
 
-To init new dir:
+To init new Git dir:
 ```
 git init
 git remote add origin https://github.com/deppierre/Docker_k8s.git
