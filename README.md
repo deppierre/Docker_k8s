@@ -18,7 +18,7 @@ docker rm mongo_server -f && docker rmi deppierre/mongodb_server
 ```
 - Rebuild the Dockerfile and run:
 ```
-docker build -t deppierre/mongodb_server . --force-rm
+docker build -t deppierre/mongodb_server . -q
 docker run -d --name mongo_server --memory 800MB deppierre/mongodb_server
 ```
 
@@ -30,7 +30,7 @@ docker rm redis_server -f && docker rmi deppierre/redis_server
 
 - Rebuild the Dockerfile and run:
 ```
-docker build -t deppierre/redis_server . --force-rm
+docker build -t deppierre/redis_server . -q
 docker run --name redis_server -ti --memory 800MB deppierre/redis_server
 ```
 
