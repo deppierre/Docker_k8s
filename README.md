@@ -31,7 +31,7 @@ docker rm redis_server -f && docker rmi deppierre/redis_server
 - Rebuild the Dockerfile and run:
 ```
 docker build -t deppierre/redis_server . -q
-docker run --name redis_server -ti --memory 800MB deppierre/redis_server
+docker run -d --name redis_server -ti --memory 800MB deppierre/redis_server
 ```
 
 3. To push to Docker repository:
