@@ -1,5 +1,5 @@
-# Docker_k8s
-This is a projet to manipulate Redis en MongoDB Cluster (Atlas)
+# Learning NoSQL with Docker
+This is a projet to manipulate Redis and MongoDB Cluster (Atlas) within handy containers
 
 To use this Git repo:
 ```
