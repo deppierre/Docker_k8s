@@ -8,4 +8,5 @@ RUN apt-get update && \
     echo "mongo \"mongodb+srv://sandbox-x5alo.mongodb.net/test\" --authenticationDatabase admin --ssl --username $mongodb_university_user --password $mongodb_university_password" > /M001/mongo_atlas_chain.sh && \
     chmod +x /M001/mongo_university_chain.sh && chmod +x /M001/mongo_atlas_chain.sh && \
     ln -s /M001/mongo_university_chain.sh /bin/mongodbu && ln -s /M001/mongo_atlas_chain.sh /bin/mongodba && \
-    wget https://s3.amazonaws.com/edu-downloads.10gen.com/M001/2020/February/static/handouts/loadMovieDetailsDataset.zip -O /M001/loadMovieDetailsDataset.zip && unzip -o /M001/loadMovieDetailsDataset.zip -d /M001
+    wget https://s3.amazonaws.com/edu-downloads.10gen.com/M001/2020/February/static/handouts/loadMovieDetailsDataset.zip -O /M001/loadMovieDetailsDataset.zip && unzip -o /M001/loadMovieDetailsDataset.zip -d /M001 && \
+    wget https://s3.amazonaws.com/edu-downloads.10gen.com/M001/2020/February/static/handouts/loadReviewsDataset.zip -O /M001/loadReviewsDataset.zip && unzip -o /M001/loadReviewsDataset.zip -d /M001
