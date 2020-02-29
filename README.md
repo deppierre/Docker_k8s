@@ -11,17 +11,27 @@ git add .
 git commit -am 'push'
 git push origin master
 ```
-1. To build a MongoDB container:
+# 1. To build a MongoDB university container:
 
-- Rebuild the Dockerfile and run:
+## 1. Container for m101:
+- Build the Dockerfile and run:
 ```
-docker build -t deppierre/mongodb_server . -q
-docker run -d --name mongo_server --memory 800MB deppierre/mongodb_server
+docker build -t deppierre/mongodb_server_m101 . -q
+docker run -d --name mongo_server --memory 800MB deppierre/mongodb_server_m101
 ```
-
 - delete:
 ```
-docker rm mongo_server -f && docker rmi deppierre/mongodb_server
+docker rm mongodb_server_m101 -f && docker rmi deppierre/mongodb_server_m101
+```
+
+## 2. Container for m103
+- Build the Dockerfile and run via docker-compose:
+```
+docker-compose build && docker-compose up -d
+```
+- delete:
+```
+docker-compose down --volumes
 ```
 
 2. To create a Redis container
