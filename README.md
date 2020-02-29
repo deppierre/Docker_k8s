@@ -11,7 +11,7 @@ git add .
 git commit -am 'push'
 git push origin master
 ```
-# 1. To build a MongoDB container:
+# 1. To build a MongoDB university container:
 
 ## 1. Container for m101:
 - Build the Dockerfile and run:
