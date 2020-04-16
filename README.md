@@ -49,6 +49,10 @@ docker exec redis_server /bin/sh -c 'cat /tmp/country.csv | redis-cli --pipe'
 ```
 docker rm redis_server -f && docker rmi deppierre/redis_server
 ```
+To delete everything:
+```
+docker rm $(docker ps -a -q)
+```
 
 3. To push to Docker repository:
 ```
