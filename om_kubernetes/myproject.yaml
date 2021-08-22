@@ -6,3 +6,4 @@ metadata:
   namespace: mongodb
 data:
   projectName: project_pierre
+  baseUrl: http://ops-manager-external-svc.mongodb.svc.cluster.local:8080
