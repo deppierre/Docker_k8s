@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: myProject
+  name: myproject
   namespace: mongodb
 data:
   projectName: project_pierre
