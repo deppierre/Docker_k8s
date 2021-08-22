@@ -11,6 +11,7 @@ spec:
   externalConnectivity:
     type: NodePort
     port: 30080
+    externalTrafficPolicy: Local
   configuration:
     mms.ignoreInitialUiSetup: "true"
     automation.versions.source: mongodb
@@ -22,7 +23,6 @@ spec:
     mms.mail.ssl: "true"
     mms.mail.transport: smtp
     mms.minimumTLSVersion: TLSv1.2
-    automation.versions.source: local
   backup:
     enabled: false
   applicationDatabase:
