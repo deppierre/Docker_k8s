@@ -7,6 +7,11 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl &&\
 sudo usermod -aG docker $USER && newgrp docker &&\
 sudo systemctl enable docker --now &&\
+sudo cat <<EOF > /etc/profile.d/kubernetes.sh
+#!/bin/bash
+alias k='kubectl'
+kubectl config set-context $(kubectl config current-context) --namespace=mongodb
+EOF
 sudo cp /tmp/kubernetes_operator/alias.sh /etc/profile.d/kubernetes.sh &&\
 \
 #Setup kind \
