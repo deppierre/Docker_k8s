@@ -5,20 +5,15 @@ sudo yum -y install docker git &&\
 #Setup kubectl \
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" &&\
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl &&\
-sudo usermod -aG docker $USER && newgrp docker &&\
+sudo usermod -aG docker $USER &&\
+sudo groupadd -f docker &&\
 sudo systemctl enable docker --now &&\
-sudo cat <<EOF > /etc/profile.d/kubernetes.sh
-#!/bin/bash
-alias k='kubectl'
-kubectl config set-context $(kubectl config current-context) --namespace=mongodb
-EOF
-sudo cp /tmp/kubernetes_operator/alias.sh /etc/profile.d/kubernetes.sh &&\
 \
 #Setup kind \
 curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64 &&\
 chmod +x ./kind &&\
 sudo mv ./kind /usr/bin/kind &&\
-cat <<EOF | kind create cluster --config -
+cat <<EOF | /usr/bin/kind create cluster --config -
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -44,10 +39,15 @@ nodes:
 EOF &&\
 \
 #Setup OM \
-kubectl create namespace mongodb &&\
-kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/crds.yaml --namespace=mongodb &&\
-kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/mongodb-enterprise.yaml --namespace=mongodb &&\
-cat <<EOF | kubectl apply -f -
+/usr/local/bin/kubectl create namespace mongodb &&\
+sudo cat <<EOF > /etc/profile.d/kubernetes.sh
+#!/bin/bash
+alias k='/usr/local/bin/kubectl'
+/usr/local/bin/kubectl config set-context $(/usr/local/bin/kubectl config current-context) --namespace=mongodb
+EOF &&\
+/usr/local/bin/kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/crds.yaml --namespace=mongodb &&\
+/usr/local/bin/kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/mongodb-enterprise.yaml --namespace=mongodb &&\
+cat <<EOF | /usr/local/bin/kubectl apply -f -
 ---
 apiVersion: v1
 kind: Secret
