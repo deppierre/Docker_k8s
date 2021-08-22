@@ -1,3 +1,4 @@
+#Setup rpm
 sudo yum -y update &&\
 sudo yum -y install docker git &&\
 \
@@ -11,16 +12,16 @@ alias k='kubectl'
 kubectl config set-context $(kubectl config current-context) --namespace=mongodb
 EOF"
 \
-# Setup conf
+#Fetch confs
 git clone https://github.com/mongodb/mongodb-enterprise-kubernetes /tmp/kubernetes_operator &&\
 git clone https://github.com/deppierre/Docker_k8s.git /tmp/conf &&\
-#Setup Kind \
+#Setup kind \
 curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64 &&\
 chmod +x ./kind &&\
 sudo mv ./kind /usr/bin/kind &&\
 kind create cluster --config /tmp/conf/om_kubernetes/kind-config.yaml &&\
 \
-#Setup MDB \
+#Setup MDB OM \
 kubectl create namespace mongodb &&\
 kubectl apply -f /tmp/kubernetes_operator/crds.yaml --namespace=mongodb &&\
 kubectl apply -f /tmp/kubernetes_operator/mongodb-enterprise.yaml --namespace=mongodb &&\
