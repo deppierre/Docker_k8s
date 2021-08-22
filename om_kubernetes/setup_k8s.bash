@@ -2,15 +2,13 @@
 sudo yum -y update &&\
 sudo yum -y install docker git &&\
 \
-#Fetch operator
-git clone https://github.com/mongodb/mongodb-enterprise-kubernetes /tmp/kubernetes_operator &&\
-\
 #Setup kubectl \
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" &&\
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl &&\
 sudo usermod -aG docker $USER && newgrp docker &&\
 sudo systemctl enable docker --now &&\
-sudo cp /tmp/kubernetes_operator/alias.sh /etc/profile.d/kubernetes.sh
+sudo cp /tmp/kubernetes_operator/alias.sh /etc/profile.d/kubernetes.sh &&\
+\
 #Setup kind \
 curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64 &&\
 chmod +x ./kind &&\
@@ -42,10 +40,20 @@ EOF &&\
 \
 #Setup OM \
 kubectl create namespace mongodb &&\
-kubectl apply -f /tmp/kubernetes_operator/crds.yaml --namespace=mongodb &&\
-kubectl apply -f /tmp/kubernetes_operator/mongodb-enterprise.yaml --namespace=mongodb &&\
-kubectl create secret generic ops-manager-admin-secret --from-literal=Username="pierre.depretz@mongodb.com" --from-literal=Password="pierre" --from-literal=FirstName="Pierre" --from-literal=LastName="Depretz" -n mongodb &&\
+kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/crds.yaml --namespace=mongodb &&\
+kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/mongodb-enterprise.yaml --namespace=mongodb &&\
 cat <<EOF | kubectl apply -f -
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ops-manager-admin-secret
+  namespace: mongodb
+stringData:
+  username: pierre.depretz@mongodb.com
+  password: pierre
+  firstName: Pierre
+  lastName: Depretz 
 ---
 apiVersion: mongodb.com/v1
 kind: MongoDBOpsManager
