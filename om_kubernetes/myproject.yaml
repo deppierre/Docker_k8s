@@ -5,6 +5,7 @@ metadata:
   name: my-project
   namespace: mongodb
 data:
+  projectName: Test2
   baseUrl: http://ops-manager-external-svc.mongodb.svc.cluster.local:8080
   orgId: 612203655f47277dc5d81545
 ---
@@ -20,7 +21,7 @@ stringData:
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: my-standalone
+  name: my-standalone-2
   namespace: mongodb
 spec:
   version: 4.4.0-ent
