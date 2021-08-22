@@ -20,6 +20,7 @@ apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
   name: my-standalone
+  namespace: mongodb
 spec:
   version: 4.4.0-ent
   type: Standalone
@@ -31,15 +32,9 @@ spec:
     configMapRef:
       name: my-project
   credentials: organization-secret
-
-  # This flag allows the creation of pods without persistent volumes. This is for
-  # testing only, and must not be used in production. 'false' will disable
-  # Persistent Volume Claims. The default is 'true'
   persistent: false
 
   podSpec:
-    # 'podTemplate' allows to set custom fields in PodTemplateSpec (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#podtemplatespec-v1-core)
-    # for the Database StatefulSet.
     podTemplate:
       spec:        
         containers:
