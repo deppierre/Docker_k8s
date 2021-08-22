@@ -6,10 +6,21 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl &&\
 sudo usermod -aG docker $USER && newgrp docker &&\
 sudo systemctl enable docker --now &&\
-sudo su -c "echo \"alias k='kubectl'\" > /etc/profile.d/kubernetes.sh" &&\
+sudo su -c "cat <<EOF > /etc/profile.d/kubernetes.sh
+alias k='kubectl'
+kubectl config set-context $(kubectl config current-context) --namespace=mongodb
+EOF"
 \
 #Setup Kind \
 curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64 &&\
+curl -Lo kind-config.yaml https://raw.githubusercontent.com/deppierre/Docker_k8s/master/kind_config.yaml &&\
 chmod +x ./kind &&\
 sudo mv ./kind /usr/bin/kind &&\
-kind create cluster --config $(wget -qO- https://raw.githubusercontent.com/deppierre/Docker_k8s/master/kind_config.yaml)
+kind create cluster --config kind-config.yaml &&\
+\
+#Setup MDB \
+kubectl create namespace mongodb &&\
+git clone https://github.com/mongodb/mongodb-enterprise-kubernetes /tmp/kubernetes_operator &&\
+kubectl apply -f /tmp/kubernetes_operator/crds.yaml --namespace=mongodb &&\
+kubectl apply -f /tmp/kubernetes_operator/mongodb-enterprise.yaml --namespace=mongodb &&\
+kubectl create secret generic ops-manager-admin-secret --from-literal=Username="pierre.depretz@mongodb.com" --from-literal=Password="pierre" --from-literal=FirstName="Pierre" --from-literal=LastName="Depretz" -n mongodb
