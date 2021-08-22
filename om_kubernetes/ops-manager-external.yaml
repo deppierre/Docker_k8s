@@ -10,21 +10,9 @@ spec:
   adminCredentials: ops-manager-admin-secret
   externalConnectivity:
     type: NodePort
-    port: 30100
+    port: 30080
   backup:
     enabled: false
   applicationDatabase:
     version: "4.4.4-ent"
     members: 3
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ops-manager-ports
-  namespace: mongodb
-spec:
-  externalTrafficPolicy: Cluster
-  ports:
-  - protocol: TCP
-    nodePort: 30080
-    port: 8080
