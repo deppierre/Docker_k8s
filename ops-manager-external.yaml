@@ -10,9 +10,10 @@ spec:
   externalConnectivity:
     type: NodePort
     port: 30100
-  applicationDatabase:
-    members: 3
-    version: 4.4.4-ent
-    persistent: true
   backup:
     enabled: false
+  applicationDatabase:
+    version: "4.4.4-ent"
+    members: 3
+    persistent: true
+
