@@ -13,7 +13,7 @@ sudo systemctl enable docker --now &&\
 curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64 &&\
 chmod +x ./kind &&\
 sudo mv ./kind /usr/bin/kind &&\
-cat <<EOF | /usr/bin/kind create cluster --config -
+cat <<EOF | /usr/bin/kind create cluster -q --config -
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -36,15 +36,15 @@ nodes:
       hostPort: 8080
       protocol: TCP
 - role: worker
-EOF &&\
-\
+EOF
 #Setup OM \
 /usr/local/bin/kubectl create namespace mongodb &&\
-sudo cat <<EOF > /etc/profile.d/kubernetes.sh
+sudo su -c "cat <<EOF > /etc/profile.d/kubernetes.sh
 #!/bin/bash
-alias k='/usr/local/bin/kubectl'
+alias k=\"/usr/local/bin/kubectl\"
 /usr/local/bin/kubectl config set-context $(/usr/local/bin/kubectl config current-context) --namespace=mongodb
-EOF &&\
+EOF
+" &&\
 /usr/local/bin/kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/crds.yaml --namespace=mongodb &&\
 /usr/local/bin/kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-enterprise-kubernetes/master/mongodb-enterprise.yaml --namespace=mongodb &&\
 cat <<EOF | /usr/local/bin/kubectl apply -f -
